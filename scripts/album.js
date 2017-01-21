@@ -18,7 +18,7 @@ var albumMarconi = {
     artist: 'Guglielmo Marconi',
     label: 'EM',
     year: '1909',
-    albumArtURL: 'assets/images/album_covers/20.png',
+    albumArtUrl: 'assets/images/album_covers/20.png',
     songs: [
         { title: 'Hello Operator?', duration: '1:01' },
         { title: 'Ring, ring, ring', duration: '5:01' },
@@ -30,8 +30,8 @@ var albumMarconi = {
 
 var createSongRow = function (songNumber, songName, songLength) {
     var template =
-        '<tr class ="album-view-song-item">'
-    +   '   <td class="song-item-number">' + songNumber + '</td>'
+        '<tr class="album-view-song-item">'
+    +   '   <td class="song-item-number" data-song-number-"' + songNumber + '">' + songNumber + '</td>'
     +   '   <td class="song-item-title">' + songName + '</td>'
     +   '   <td class="song-item-duration">' + songLength + '</td>'
     +   '</tr>'
@@ -49,7 +49,7 @@ var setCurrentAlbum = function(album) {
     
     albumTitle.firstChild.nodeValue = album.title;
     albumArtist.firstChild.nodeValue = album.artist;
-    albumReleaseInfo.firstChild.nodeValue = album.yet + ' ' + album.label;
+    albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
     albumImage.setAttribute('src', album.albumArtUrl);
     
     albumSongList.innerHTML = '';
@@ -59,6 +59,23 @@ var setCurrentAlbum = function(album) {
     }
 };
 
+var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
+var songRows = document.getElementsByClassName('album-view-song-item');
+
+var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
+
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
+    
+    songListContainer.addEventListener('mouseover', function(event) {
+        if (event.target.parentElement.className === 'album-view-song-item') {
+            event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
+        }
+    });
+    
+    for (var i = 0; i < songRows.length; i++) {
+        songRows[i].addEventListener('mouseleave', function(event) {
+            this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
+        });
+    }
 };
