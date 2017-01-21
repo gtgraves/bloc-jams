@@ -18,7 +18,7 @@ var albumMarconi = {
     artist: 'Guglielmo Marconi',
     label: 'EM',
     year: '1909',
-    albumArtURL: 'assets/images/album_covers/20.png',
+    albumArtUrl: 'assets/images/album_covers/20.png',
     songs: [
         { title: 'Hello Operator?', duration: '1:01' },
         { title: 'Ring, ring, ring', duration: '5:01' },
@@ -27,6 +27,23 @@ var albumMarconi = {
         { title: 'Wrong phone number', duration: '2:15' }
     ]
 };
+
+var albumHamilton = {
+    title: 'Hamilton',
+    artist: 'Original Broadway Cast',
+    label: 'Broadway',
+    year: '2015',
+    albumArtUrl: 'assets/images/album_covers/02.png',
+    songs: [
+        { title: 'Alexander Hamilton', duration: '3:57' },
+        { title: 'Aaron Burr, Sir', duration: '2:37' },
+        { title: 'My Shot', duration: '5:33' },
+        { title: 'The Story of Tonight', duration: '1:32' },
+        { title: 'The Schuyler Sisters', duration: '3:07' }
+    ]
+};
+
+var albumCover = document.getElementsByClassName('album-cover-art')[0];
 
 var createSongRow = function (songNumber, songName, songLength) {
     var template =
@@ -49,7 +66,7 @@ var setCurrentAlbum = function(album) {
     
     albumTitle.firstChild.nodeValue = album.title;
     albumArtist.firstChild.nodeValue = album.artist;
-    albumReleaseInfo.firstChild.nodeValue = album.yet + ' ' + album.label;
+    albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
     albumImage.setAttribute('src', album.albumArtUrl);
     
     albumSongList.innerHTML = '';
@@ -62,3 +79,18 @@ var setCurrentAlbum = function(album) {
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
 };
+
+albumCover.addEventListener("click", function() {
+    var albumTitle = document.getElementsByClassName('album-view-title')[0];
+    if ( albumTitle.firstChild.nodeValue == 'The Colors' ) {
+        setCurrentAlbum(albumMarconi);
+    }
+    else if ( albumTitle.firstChild.nodeValue == 'The Telephone' ) {
+        setCurrentAlbum(albumHamilton);
+    }
+    else if ( albumTitle.firstChild.nodeValue == 'Hamilton' ) {
+        setCurrentAlbum(albumPicasso);
+    }
+});
+
+
