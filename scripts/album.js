@@ -111,7 +111,7 @@ var filterTimeCode = function(timeInSeconds) {
     var timeInteger = parseFloat(timeInSeconds);
     var minutes = Math.floor(timeInteger / 60);
     var seconds;
-    if (Math.floor((timeInteger % 60) <= 9)) {
+    if (Math.floor((timeInteger % 60) < 10)) {
         seconds = '0' + Math.floor((timeInteger % 60));
         } else {
             seconds = Math.floor(timeInteger % 60);
